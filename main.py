@@ -5,10 +5,12 @@ import random
 def main():
     @dataclass
     class Character:
-        def __init__(self,name,age,region):
+        def __init__(self,name,age,region,hp,mana):
             self.name = name
             self.age = age
             self.region = region
+            self.hp = hp
+            self.mana = mana
         
         def add_attack(self,attack):
             pass
@@ -16,34 +18,59 @@ def main():
         def add_defense(self,defense):
             pass
 
-        def add_hp(self,hplist):
+        def add_healing(self,healinglist):
             pass
 
         def add_items(self,items):
             pass
         
     class WeaponsList:
-        def __init__(self,name,attacklist = None,defenselist = None,raisehp = None,itemlist=None):
+        def __init__(self,name,attacklist = None,defenselist = None, healinglist = None,itemlist=None):
             self.name = name
             self.attacklist = list()
             self.defenselist = list()
-            self.raisehp = list()
+            self.healinglist = list()
             self.itemlist = list()
         def __weaponsnames__(self):
             if Character.region == 'wizard':
-                attacks = ['Beam','Staff']
-                defense = ['Barrier']
-                hp = ['Revive']
-                self.attacklist.extend(attacks)
+                Beam = CharacterItemAttributes('Beam','Attack',15,10)
+                Staff = CharacterItemAttributes('Staff','Attack',10,5)
+
+                Barrier = CharacterItemAttributes('Barrier','Defense',15,8)
+
+                Revive = CharacterItemAttributes('Revive','Healing',Character.hp,20)
+                Potion = CharacterItemAttributes('Potion','Healing',10,5)
+
+                self.attacklist.extend(Beam,Staff)
+                self.defenselist.append(Barrier)
+                self.healinglist.extend(Revive,Potion)
             elif Character.region == 'knight':
-                self.attacklist = ['Sword']
-                self.defenselist = ['Shield','Block']
-            elif Character.region == 'Solider':
-                self.attacklist = ['Gun','']
+                Sword = CharacterItemAttributes('Sword','Attack', 25,15)
+
+                Shield = CharacterItemAttributes('Shield','Defense',20,10)
+                Block = CharacterItemAttributes('Sword Block','Defense',10,5)
+
+                Food = CharacterItemAttributes('Food','Healing',3,1)
+
+                self.attacklist.append(Sword)
+                self.defenselist.extend(Shield,Block)
+                self.healinglist.append(Food)
+            elif Character.region == 'solider':
+                Gun = CharacterItemAttributes('Bullets','Multi-Attack',10,20)
+                Shotgun = CharacterItemAttributes('Shotgun','Attack',20,13)
+
+
+
+                self.attacklist.extend(Gun,Shotgun)
+            elif Character.region == 'ninja':
+                Shuriken = CharacterItemAttributes('Shuriken','Multi-Attack',10,20)
         
-    class AttackAttributes():
-        def __init__(self,name,damage):
-            pass
+    class CharacterItemAttributes():
+        def __init__(self,name,type,count,manacost):
+            self.name = name
+            self.type = type
+            self.count = count
+            self.manacost = manacost
         
     class Action():
         def __init__(self,name,damage,hp):
@@ -57,29 +84,5 @@ def main():
             return f"{Character.name} hits {target} for {final_damage} damage!{crit_text}"
 
 
-    test = input(" ")
-    while test != 'exit':
-        try:
-            with open('characters.pkl', 'rb') as file:
-                loaded_characters = pickle.load(file)
-        except FileNotFoundError:
 
-            print("New Character Creation")
-            character_count = int(input("How many characters would you like to create? (Max is 4)"))
-            while character_count > 4 or character_count < 0:
-                character_count = int(input("INVALID : How many characters would you like to create? (Max is 4)"))
-
-            characters = []
-            attributes = ['name', 'age', 'type']
-
-            for i in range(character_count):
-                print(f'Character creation {i+1}')
-                character_data = []
-                for j in range(3):
-                    attr = input(f'Enter {attributes[j]} of character {i+1}')
-                    character_data.append(attr)
-                char = Character(character_data[0], character_data[1], character_data[2])
-                characters.append(char)
-
-            with open('characters.pkl', 'wb') as file:
-                pickle.dump(characters, file)
+main()
