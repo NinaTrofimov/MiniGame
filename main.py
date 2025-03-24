@@ -27,10 +27,31 @@ def main():
 
         def add_items(self,items):
             self.items.append(items)
+    
+    #list data structure
+    class itemPocket:
+        def __init__(self):
+            self.itembag = list()
         
+        def __len__(self):
+            return len(self.itembag)
+
+        def __append__(self,item):
+            if self.__len__() == 20:
+                print('Not enough room in your bag')
+            else:
+                self.itembag.append(item)
+        
+        def __use__(self, item):
+            if item not in self.itembag:
+                raise KeyError(str(item) + "not in bag")
+            else:
+                self.itembag.pop(item)
+            
+
+
     class WeaponsList:
-        def __init__(self,name,attacklist = None,defenselist = None, healinglist = None,itemlist=None):
-            self.name = name
+        def __init__(self,attacklist = None,defenselist = None, healinglist = None,itemlist=None):
             self.attacklist = list()
             self.defenselist = list()
             self.healinglist = list()
@@ -70,8 +91,7 @@ def main():
                 Shuriken = CharacterItemAttributes('Shuriken','Multi-Attack',10,20)
         
     class CharacterItemAttributes():
-        def __init__(self,name,type,count,manacost):
-            self.name = name
+        def __init__(self,type,count,manacost):
             self.type = type
             self.count = count
             self.manacost = manacost
