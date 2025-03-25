@@ -18,7 +18,11 @@ test = input(" ")
                 print(f'Character creation {i+1}')
                 character_data = []
                 for j in range(3):
-                    attr = input(f'Enter {attributes[j]} of character {i+1}')
+                    print(f'Enter {attributes[j]} of character {i+1}')
+                    if attributes[j] == 'type':
+                        attr = input(f'Pick character class:\n Wizard\n Knight\n Soldier\n Ninja\n')
+                    else:
+                        attr = input("")
                     character_data.append(attr)
                 char = Character(character_data[0], character_data[1], character_data[2])
                 characters.append(char)

@@ -80,7 +80,7 @@ def main():
                 self.attacklist.append(Sword)
                 self.defenselist.extend(Shield,Block)
                 self.healinglist.append(Food)
-            elif region == 'solider':
+            elif region == 'soldier':
                 Gun = CharacterItemAttributes('Bullets','Multi-Attack',10,20)
                 Shotgun = CharacterItemAttributes('Shotgun','Attack',20,13)
 
@@ -97,10 +97,8 @@ def main():
             self.manacost = manacost
         
     class Action():
-        def __init__(self,name,damage,hp):
-            self.name = name
-            self.damage = damage
-        
+        def __init__(self):
+            pass
         def attack_use(self,target):
             crit = random.random() < 0.2 
             final_damage = self.damage * (2 if crit else 1)
