@@ -28,7 +28,6 @@ def main():
         def add_items(self,items):
             self.items.append(items)
     
-    #list data structure
     class itemPocket:
         def __init__(self):
             self.itembag = list()
